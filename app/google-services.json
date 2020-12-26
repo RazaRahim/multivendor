@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "845867262851",
+    "project_id": "stock-30820",
+    "storage_bucket": "stock-30820.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845867262851:android:c0fe74da3d1fe5ee0f8cb6",
+        "android_client_info": {
+          "package_name": "com.example.megastock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845867262851-i1jmstcchukj4fm4lte847lehsqrg9qg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfJp3SzjzLgyw4UuVqBYnhVjTghmc9Z7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845867262851-i1jmstcchukj4fm4lte847lehsqrg9qg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
