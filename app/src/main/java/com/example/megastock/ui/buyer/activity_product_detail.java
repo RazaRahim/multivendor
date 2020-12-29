@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.megastock.Models.cartModel;
 import com.example.megastock.Models.productmodel;
 import com.example.megastock.R;
 import com.example.megastock.Utils.SharedPrefs;
@@ -27,12 +28,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class activity_product_detail extends AppCompatActivity {
-    TextView prod_name, prod_price, prod_desc,prod_quantity;
+    TextView prod_name,prod_brand, prod_price, prod_desc,prod_quantity,pro_Key;
     ImageView prod_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
     FloatingActionButton btnCart;
     ElegantNumberButton numberButton;
-    String proName,proPrice,proDescc,proImage,proQuantity;
+    String proName,brand,proPrice,proDescc,proImage,proQuantity,proKey,No;
     Task<Void> cart_ref;
 
     @Override
@@ -40,7 +41,11 @@ public class activity_product_detail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
+
+        pro_Key = findViewById(R.id.prokey);
+
         prod_name = (TextView) findViewById(R.id.product_details_name);
+        prod_brand = findViewById(R.id.product_details_brand);
         prod_price = (TextView) findViewById(R.id.product_details_price);
         prod_desc = (TextView) findViewById(R.id.detail);
         prod_image = (ImageView)findViewById(R.id.product_details_image);
@@ -51,30 +56,49 @@ public class activity_product_detail extends AppCompatActivity {
         numberButton = findViewById(R.id.number_button);
 
         proName = getIntent().getStringExtra("name");
+        brand = getIntent().getStringExtra("Brand");
         proImage = getIntent().getStringExtra("image");
         proDescc = getIntent().getStringExtra("Desc");
         proPrice = getIntent().getStringExtra("price");
         proQuantity = getIntent().getStringExtra("quantity");
+        proKey = getIntent().getStringExtra("Key");
 
+        Toast.makeText(this, ""+proKey, Toast.LENGTH_SHORT).show();
 
         Glide.with(activity_product_detail.this)
                 .load(proImage)
                 .into(prod_image);
         prod_name.setText(proName);
+        prod_brand.setText(brand);
         prod_price.setText("Rs: "+proPrice);
         prod_desc.setText(proDescc);
         prod_quantity.setText("Qty: "+proQuantity);
+        pro_Key.setText(proKey);
+
 
         btnCart.setOnClickListener(new View.OnClickListener() {
     @Override
-    public void onClick(View view) {
-        final productmodel  model = new productmodel(
-                proName,proName,proName,proQuantity,proPrice,proDescc,proImage
+    public void onClick(final View view) {
+        int noo = Integer.parseInt(numberButton.getNumber());
+        int ppp = Integer.parseInt(proPrice);
+        int pri = ppp*noo;
+        No = String.valueOf(pri);
+
+
+        final cartModel model = new cartModel(
+                proName,brand,proName,No,proQuantity,proDescc,proImage,proKey,numberButton.getNumber()
         );
-        cart_ref=FirebaseDatabase.getInstance().getReference().child("cart").child(SharedPrefs.getBuyermodel(activity_product_detail.this).getPhone()).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+        cart_ref=FirebaseDatabase.getInstance().getReference().child("cart").child(SharedPrefs.getBuyermodel(activity_product_detail.this).getPhone()).child(proKey).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(activity_product_detail.this, "Successfully registered", Toast.LENGTH_SHORT).show();
+
+                Snackbar.make(view, model.getName()+" added to cart", Snackbar.LENGTH_LONG)
+                        .setAction("View Cart", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(activity_product_detail.this, cart.class));
+                            }
+                        }).show();
 
             }
         });

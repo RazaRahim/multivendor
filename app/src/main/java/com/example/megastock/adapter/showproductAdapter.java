@@ -23,10 +23,13 @@ public class showproductAdapter extends RecyclerView.Adapter<showproductAdapter.
 
     Context context;
     ArrayList<productmodel> productmodels;
+    ArrayList<String> keyss;
 
-    public showproductAdapter(Context context, ArrayList<productmodel> productmodels) {
+    //its constructior for show products in buyer activity
+    public showproductAdapter(Context context, ArrayList<productmodel> productmodels,ArrayList<String> keyss) {
         this.context = context;
         this.productmodels = productmodels;
+        this.keyss=keyss;
     }
 
     @NonNull
@@ -55,6 +58,8 @@ public class showproductAdapter extends RecyclerView.Adapter<showproductAdapter.
                 intent.putExtra("Desc",model.getDescription());
                 intent.putExtra("price",model.getPrice());
                 intent.putExtra("quantity",model.getQuantity());
+                intent.putExtra("Key",keyss.get(position));
+                intent.putExtra("Brand",model.getBrand());
 
 
                 context.startActivity(intent);

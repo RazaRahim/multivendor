@@ -21,6 +21,7 @@ import com.example.megastock.R;
 import com.example.megastock.Splash;
 import com.example.megastock.Utils.SharedPrefs;
 import com.example.megastock.ui.buyer.BuyerEdit;
+import com.example.megastock.ui.buyer.cart;
 import com.google.android.material.navigation.NavigationView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -163,8 +164,8 @@ public class selleractivity extends AppCompatActivity implements NavigationView.
             }
 //            startActivity(new Intent(MainActivity.this, Profile.class));
 
-        } else if (id == R.id.nav_pdf) {
-//            startActivity(new Intent(MainActivity.this, PdfList.class));
+        } else if (id == R.id.cart) {
+            startActivity(new Intent(selleractivity.this, cart.class));
 
 
         } else if (id == R.id.nav_faqs) {

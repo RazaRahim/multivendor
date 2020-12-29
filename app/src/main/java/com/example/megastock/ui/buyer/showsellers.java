@@ -200,8 +200,8 @@ int MY_PERMISSIONS_REQUEST_CALL_PHONE= 0;
                 }
 //            startActivity(new Intent(MainActivity.this, Profile.class));
 
-            } else if (id == R.id.nav_pdf) {
-//            startActivity(new Intent(MainActivity.this, PdfList.class));
+            } else if (id == R.id.cart) {
+            startActivity(new Intent(showsellers.this, cart.class));
 
 
             } else if (id == R.id.nav_faqs) {

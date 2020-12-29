@@ -82,18 +82,27 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/product_details_name"
-                        android:padding="12dp"
                         android:layout_marginTop="8dp"
                         android:text="Product Name"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"
                         android:textSize="20dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/product_details_brand"
+                        android:text="Product Brand"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="normal"
+                        android:textSize="15sp"
                         />
 
                     <LinearLayout
@@ -140,6 +149,14 @@
                         app:initialNumber="1"
                         app:finalNumber="20"
                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="key"
+                        android:id="@+id/prokey"
+                        android:visibility="gone"/>
+
 
                 </LinearLayout>
 

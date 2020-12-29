@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:theme">
-        <activity android:name=".ui.buyer.activity_product_detail"></activity>
+        <activity android:name=".ui.buyer.cart"></activity>
+        <activity android:name=".ui.buyer.activity_product_detail" />
         <activity android:name=".ui.buyer.showsellers" />
         <activity android:name=".ui.buyer.showproducts" />
         <activity android:name=".prac" />

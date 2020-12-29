@@ -56,12 +56,12 @@ public class showproducts extends AppCompatActivity {
                            productmodel model = dataSnapshot.getValue(productmodel.class);
                            productList.add(model);
                            keyi.add(key);
-//                           Toast.makeText(showproducts.this, ""+keyi, Toast.LENGTH_LONG).show();
+                           Toast.makeText(showproducts.this, ""+keyi, Toast.LENGTH_LONG).show();
 
                        }
 //                       try {
 
-                           adapter = new showproductAdapter(showproducts.this,productList);
+                           adapter = new showproductAdapter(showproducts.this,productList,keyi);
                            recyclerView2.setAdapter(adapter);
 
 //                       }

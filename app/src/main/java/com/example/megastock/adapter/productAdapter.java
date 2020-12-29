@@ -39,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class productAdapter extends FirebaseRecyclerAdapter<getproductmodel, productAdapter.PostViewHolder> {
 
-Context context;
+    Context context;
     CircleImageView imagev;
     EditText namev;
     EditText brandv;

@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.megastock.Utils.SharedPrefs;
 import com.example.megastock.ui.buyer.BuyerEdit;
 import com.example.megastock.ui.Seller.SellerEdit;
+import com.example.megastock.ui.buyer.cart;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -258,10 +259,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 //            startActivity(new Intent(MainActivity.this, Profile.class));
 
-        } else if (id == R.id.nav_pdf) {
-//            startActivity(new Intent(MainActivity.this, PdfList.class));
-
-
+        } else if (id == R.id.cart) {
+            startActivity(new Intent(MainActivity.this, cart.class));
+            
         } else if (id == R.id.nav_faqs) {
 //            startActivity(new Intent(MainActivity.this, AddFaq.class));
 

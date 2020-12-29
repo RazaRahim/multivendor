@@ -2,23 +2,22 @@ package com.example.megastock.Models;
 
 public class productmodel {
 
-    String brand,name,type, price,quantity, description,url;
+    String brand,name,type,quantity,price, description,url;
 
 
     public productmodel() {
 
     }
 
-    public productmodel(String brand, String name, String type, String price, String quantity, String description, String url) {
+    public productmodel(String brand, String name, String type, String quantity, String price, String description, String url) {
         this.brand = brand;
         this.name = name;
         this.type = type;
-        this.price = price;
         this.quantity = quantity;
+        this.price = price;
         this.description = description;
         this.url = url;
     }
-
 
     public String getQuantity() {
         return quantity;
