@@ -1,12 +1,20 @@
 package com.example.megastock.Models;
 
 public class CartItems {
-    private String Name, Price, Quantity, Id;
+    private String Name, Price, Quantity, Id,url;
     public int total_price;
 
 //    public int getTotal_price() {
 //        return total_price;
 //    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getName() {
         return Name;
@@ -43,11 +51,20 @@ public class CartItems {
     public CartItems() {
     }
 
-    public CartItems(String name, String price, String quantity, String id) {
+//    public CartItems(String name, String price, String quantity, String id) {
+//        Name = name;
+//        Price = price;
+//        Quantity = quantity;
+//        Id = id;
+//        total_price += Integer.parseInt(price)* Integer.parseInt(quantity);
+//    }
+
+
+    public CartItems(String name, String price, String quantity, String id, String url) {
         Name = name;
         Price = price;
         Quantity = quantity;
         Id = id;
-        total_price += Integer.parseInt(price)* Integer.parseInt(quantity);
+        this.url = url;
     }
 }

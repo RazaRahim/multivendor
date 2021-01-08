@@ -18,6 +18,7 @@ import com.example.megastock.Models.productmodel;
 import com.example.megastock.R;
 import com.example.megastock.Utils.SharedPrefs;
 import com.example.megastock.ui.Seller.sellersignup;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -79,29 +80,41 @@ public class activity_product_detail extends AppCompatActivity {
         btnCart.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(final View view) {
-        int noo = Integer.parseInt(numberButton.getNumber());
-        int ppp = Integer.parseInt(proPrice);
-        int pri = ppp*noo;
-        No = String.valueOf(pri);
+//        int noo = Integer.parseInt(numberButton.getNumber());
+//        int ppp = Integer.parseInt(proPrice);
+//        int pri = ppp*noo;
+//        No = String.valueOf(pri);
 
 
         final cartModel model = new cartModel(
-                proName,brand,proName,No,proQuantity,proDescc,proImage,proKey,numberButton.getNumber()
+                proName,brand,proName,proPrice,proQuantity,proDescc,proImage,proKey,numberButton.getNumber()
         );
-        cart_ref=FirebaseDatabase.getInstance().getReference().child("cart").child(SharedPrefs.getBuyermodel(activity_product_detail.this).getPhone()).child(proKey).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
+        cart_ref=FirebaseDatabase.getInstance().getReference().child("cart").child("UserView").child(SharedPrefs.getBuyermodel(activity_product_detail.this).getPhone())
+                .child(proKey).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
-                Snackbar.make(view, model.getName()+" added to cart", Snackbar.LENGTH_LONG)
-                        .setAction("View Cart", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                startActivity(new Intent(activity_product_detail.this, cart.class));
-                            }
-                        }).show();
+                        if (task.isSuccessful()) {
+                            cart_ref=FirebaseDatabase.getInstance().getReference().child("cart").child("AdminView").child(SharedPrefs.getBuyermodel(activity_product_detail.this).getPhone())
+                                    .child(proKey).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Snackbar.make(view, model.getName() + " added to cart", Snackbar.LENGTH_LONG)
+                                                        .setAction("View Cart", new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View view) {
+                                                                startActivity(new Intent(activity_product_detail.this, cart.class));
+                                                            }
+                                                        }).show();
+                                            }
+                                        }
+                                    });
 
-            }
-        });
+                        }
+
+                    }
+                });
 
     }
 });
