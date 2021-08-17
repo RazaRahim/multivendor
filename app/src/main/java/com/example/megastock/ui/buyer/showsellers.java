@@ -31,6 +31,8 @@ import com.example.megastock.Splash;
 import com.example.megastock.Utils.SharedPrefs;
 import com.example.megastock.adapter.shopeAdapter;
 import com.example.megastock.ui.Seller.SellerEdit;
+import com.example.megastock.ui.Seller.order;
+import com.example.megastock.ui.Seller.selleractivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -68,7 +70,14 @@ int MY_PERMISSIONS_REQUEST_CALL_PHONE= 0;
 
 
         toolbarr = (Toolbar) findViewById(R.id.toolbar2);
+        TextView mTitle = (TextView) toolbarr.findViewById(R.id.toolbar_title);
+
         setSupportActionBar(toolbarr);
+        mTitle.setText(toolbarr.getTitle());
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        mTitle.setText("List of All Dealers");
 
 
         recyclerView = findViewById(R.id.recyclerviewp);
@@ -190,7 +199,8 @@ int MY_PERMISSIONS_REQUEST_CALL_PHONE= 0;
             int id = item.getItemId();
 
             if (id == R.id.nav_home) {
-                // Handle the camera action
+
+
             } else if (id == R.id.nav_profile) {
                 if (SharedPrefs.getLoggedInAs(showsellers.this).equalsIgnoreCase("Seller")) {
                     startActivity(new Intent(showsellers.this, SellerEdit.class));
@@ -202,9 +212,14 @@ int MY_PERMISSIONS_REQUEST_CALL_PHONE= 0;
 
             } else if (id == R.id.cart) {
             startActivity(new Intent(showsellers.this, cart.class));
+            }
 
+            else if (id == R.id.order) {
+                startActivity(new Intent(showsellers.this, order.class));
 
-            } else if (id == R.id.nav_faqs) {
+            }
+
+            else if (id == R.id.nav_faqs) {
 //            startActivity(new Intent(MainActivity.this, AddFaq.class));
 
 
@@ -213,7 +228,9 @@ int MY_PERMISSIONS_REQUEST_CALL_PHONE= 0;
                 Intent i = new Intent(showsellers.this, Splash.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
-                finish();
+
+
+                finishAffinity();
             }
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

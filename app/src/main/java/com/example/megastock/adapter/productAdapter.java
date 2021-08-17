@@ -103,7 +103,6 @@ public class productAdapter extends FirebaseRecyclerAdapter<getproductmodel, pro
                 });
 
 
-
                 buttonv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

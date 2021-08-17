@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.megastock.Utils.SharedPrefs;
+import com.example.megastock.ui.Seller.order;
 import com.example.megastock.ui.buyer.BuyerEdit;
 import com.example.megastock.ui.Seller.SellerEdit;
 import com.example.megastock.ui.buyer.cart;
@@ -262,7 +263,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.cart) {
             startActivity(new Intent(MainActivity.this, cart.class));
             
-        } else if (id == R.id.nav_faqs) {
+        }
+//        else if (id == R.id.order) {
+//            startActivity(new Intent(MainActivity.this, order.class));
+//
+//        }
+        else if (id == R.id.nav_faqs) {
 //            startActivity(new Intent(MainActivity.this, AddFaq.class));
 
 

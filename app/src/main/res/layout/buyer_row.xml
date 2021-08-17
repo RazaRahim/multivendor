@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="15dp"
+    card_view:cardCornerRadius="10dp"
+
+    >
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/numbers"
+            android:text="0"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:layout_margin="5dp"
+            />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="1dp"
+            android:layout_margin="3dp"
+            android:src="@drawable/ic_user"
+            android:id="@+id/seller_icon"/>
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:textColor="#000"
+                android:layout_marginTop="5dp"
+                android:text="First Name: "
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:id="@+id/sellername"
+                android:textColor="#000"
+                android:layout_marginTop="5dp"
+                android:text="Name"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:textColor="#000"
+                android:text="Last Name: " />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:textColor="#000"
+                android:id="@+id/shopename"
+                android:text="Shope"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_make_call"
+                android:layout_marginLeft="2dp"
+                android:id="@+id/call"
+                android:layout_weight="1">
+            </ImageView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_whatsapp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/whatsapp"
+                android:layout_weight="1">
+            </ImageView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

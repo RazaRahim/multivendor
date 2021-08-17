@@ -27,6 +27,7 @@ public class choose_payment_method extends AppCompatActivity {
     private EditText nameTxt , phoneTxt , addressTxt , cityTxt;
     private Button btn_confirm;
     private String totalPrice = "";
+    private String productkey = "";
     private ImageView btn_retour;
 
     @Override
@@ -36,6 +37,7 @@ public class choose_payment_method extends AppCompatActivity {
 
 
         totalPrice = getIntent().getStringExtra("totalprice");
+        productkey = getIntent().getStringExtra("productKey");
 
 
         btn_confirm = (Button) findViewById(R.id.btn_final);
@@ -47,6 +49,7 @@ public class choose_payment_method extends AppCompatActivity {
 
         nameTxt.setText(SharedPrefs.getBuyermodel(choose_payment_method.this).getName());
         phoneTxt.setText(SharedPrefs.getBuyermodel(choose_payment_method.this).getPhone());
+//        phoneTxt.setText(productkey);
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +98,7 @@ public class choose_payment_method extends AppCompatActivity {
         saveCurrentTIme = currentTime.format(calendar.getTime());
 
         final DatabaseReference commandRef = FirebaseDatabase.getInstance().getReference().child("Command")
-                .child(SharedPrefs.getBuyermodel(choose_payment_method.this).getPhone());
+                .child(SharedPrefs.getBuyermodel(choose_payment_method.this).getPhone()).child(productkey);
 
         HashMap<String,Object> hashMap = new HashMap<>();
 

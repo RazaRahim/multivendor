@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,12 +19,22 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
+import com.example.megastock.MainActivity;
+import com.example.megastock.Models.odersmodel;
 import com.example.megastock.R;
 import com.example.megastock.Splash;
 import com.example.megastock.Utils.SharedPrefs;
+import com.example.megastock.adapter.showorderAdapter;
 import com.example.megastock.ui.buyer.BuyerEdit;
 import com.example.megastock.ui.buyer.cart;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -33,6 +45,7 @@ public class selleractivity extends AppCompatActivity implements NavigationView.
     CardView posts,update_view;
     Button logout;
     private Toolbar toolbarr;
+    ArrayList<String> keyi = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +87,9 @@ public class selleractivity extends AppCompatActivity implements NavigationView.
         });
 
         initDrawer();
+
+
+
 
 //        Intent intent = new Intent(selleractivity.this, showproducts.class);
 //        String uidphn = SharedPrefs.getSellerModel(selleractivity.this).getPhone();
@@ -164,11 +180,18 @@ public class selleractivity extends AppCompatActivity implements NavigationView.
             }
 //            startActivity(new Intent(MainActivity.this, Profile.class));
 
-        } else if (id == R.id.cart) {
-            startActivity(new Intent(selleractivity.this, cart.class));
+        }
+//        else if (id == R.id.cart) {
+//            startActivity(new Intent(selleractivity.this, cart.class));
+//
+//        }
+        else if (id == R.id.order) {
+            Intent intent = new Intent(selleractivity.this,order.class);
+//            intent.putExtra("keys",keyi);
+            startActivity(intent);
 
-
-        } else if (id == R.id.nav_faqs) {
+        }
+        else if (id == R.id.nav_faqs) {
 //            startActivity(new Intent(MainActivity.this, AddFaq.class));
 
 

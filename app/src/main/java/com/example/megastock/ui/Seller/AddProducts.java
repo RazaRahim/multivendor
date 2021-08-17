@@ -113,7 +113,6 @@ public class AddProducts extends AppCompatActivity {
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 initMatisse();
             }
         });
@@ -341,8 +340,5 @@ public class AddProducts extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-
 
 }

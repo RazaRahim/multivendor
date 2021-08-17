@@ -1,7 +1,11 @@
 package com.example.megastock.ui.buyer;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,12 +16,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -31,14 +38,18 @@ import com.example.megastock.Models.CartItems;
 import com.example.megastock.Models.cartModel;
 import com.example.megastock.Models.productmodel;
 import com.example.megastock.R;
+import com.example.megastock.Splash;
 import com.example.megastock.Utils.SharedPrefs;
 import com.example.megastock.adapter.cartAdapter;
 import com.example.megastock.adapter.showproductAdapter;
+import com.example.megastock.ui.Seller.SellerEdit;
+import com.example.megastock.ui.Seller.order;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,13 +63,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import info.hoang8f.widget.FButton;
 
 import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
 
-public class cart extends AppCompatActivity {
+public class cart extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-
+    private Toolbar toolbarr;
     public String Quant;
 
     StringBuffer buf_name, buf_price, buf_quantity;
@@ -72,7 +84,7 @@ public class cart extends AppCompatActivity {
 
     TextView txt_total_price;
     FirebaseRecyclerOptions<CartItems> options = null;
-
+    public String prokey;
     @Override
     protected void onStart() {
         super.onStart();
@@ -105,7 +117,15 @@ public class cart extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        toolbarr = (Toolbar) findViewById(R.id.toolbar5);
+        TextView mTitle = (TextView) toolbarr.findViewById(R.id.toolbar_title);
 
+        setSupportActionBar(toolbarr);
+        mTitle.setText(toolbarr.getTitle());
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        mTitle.setText("Place Order");
         buf_name = new StringBuffer();
         buf_price = new StringBuffer();
         buf_quantity = new StringBuffer();
@@ -123,10 +143,115 @@ public class cart extends AppCompatActivity {
         getTotalPrice();
 //        final String txtT = txt_total_price.getText().toString();
 
-
+        initDrawer();
 
     }
+    private void initDrawer() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbarr, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle.getDrawerArrowDrawable().setColor(Color.WHITE);
+        NavigationView navigationView = (NavigationView)  findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
 
+        CircleImageView image = headerView.findViewById(R.id.imageView);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.name_drawer);
+        TextView navSubtitle = (TextView) headerView.findViewById(R.id.subtitle_drawer);
+        if (SharedPrefs.getLoggedInAs(cart.this).equalsIgnoreCase("Buyer")) {
+            Glide.with(cart.this).load(SharedPrefs.getBuyermodel(cart.this).getPicUrl()).into(image);
+
+            navUsername.setText("Welcome, " + SharedPrefs.getBuyermodel(cart.this).getName());
+        } else if (SharedPrefs.getLoggedInAs(cart.this).equalsIgnoreCase("Seller")) {
+            Glide.with(cart.this).load(SharedPrefs.getSellerModel(cart.this).getPicUrl()).into(image);
+
+            navUsername.setText("Welcome, " + SharedPrefs.getSellerModel(cart.this).getName());
+
+        } else {
+            Glide.with(cart.this).load(R.drawable.logo).into(image);
+            navUsername.setText("Admin");
+
+        }
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+            startActivity(new Intent(cart.this, showsellers.class));
+            finish();
+        } else if (id == R.id.nav_profile) {
+            if (SharedPrefs.getLoggedInAs(cart.this).equalsIgnoreCase("Seller")) {
+                startActivity(new Intent(cart.this, SellerEdit.class));
+            } else if (SharedPrefs.getLoggedInAs(cart.this).equalsIgnoreCase("Buyer")) {
+                startActivity(new Intent(cart.this, BuyerEdit.class));
+
+            }
+//            startActivity(new Intent(MainActivity.this, Profile.class));
+
+        } else if (id == R.id.cart) {
+            startActivity(new Intent(cart.this, cart.class));
+        }
+
+        else if (id == R.id.order) {
+            startActivity(new Intent(cart.this, order.class));
+
+        }
+
+        else if (id == R.id.nav_faqs) {
+//            startActivity(new Intent(MainActivity.this, AddFaq.class));
+
+
+        } else if (id == R.id.nav_signuout) {
+            SharedPrefs.logout(cart.this);
+            Intent i = new Intent(cart.this, Splash.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+            finish();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+
+    }
         private void getTotalPrice() {
 
         FirebaseDatabase.getInstance().getReference().child("cart").child("UserView").child(SharedPrefs.getBuyermodel(cart.this).getPhone())
@@ -137,17 +262,20 @@ public class cart extends AppCompatActivity {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren())
                         {
                             cartModel cartItems = dataSnapshot.getValue(cartModel.class);
+                            prokey = cartItems.getProdkey();
                             assert cartItems != null;
                             total_price += Integer.parseInt(cartItems.getPrice())*Integer.parseInt(cartItems.getNo());
                         }
 
                         txt_total_price.setText(String.valueOf(total_price));
                         final String art = String.valueOf(total_price);
+
                         btn_placeorder.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent =new Intent(cart.this,choose_payment_method.class);
                                 intent.putExtra("totalprice", art);
+                                intent.putExtra("productKey",prokey);
                                 startActivity(intent);
                             }
                         });
